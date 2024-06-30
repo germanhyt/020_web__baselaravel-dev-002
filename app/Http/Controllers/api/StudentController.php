@@ -7,17 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
-use App\Intefaces\StudentRepositoryInterface;
+use App\Interfaces\StudentRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @OA\Info(
- *      title="API Swagger",
- *      version="1.0",
- *      description="API CRUD Students"
- * )
- *
  * @OA\Server(url="http://localhost:8000")
  */ class StudentController extends Controller
 {

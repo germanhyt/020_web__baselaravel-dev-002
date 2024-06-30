@@ -30,12 +30,32 @@ class ApiResponseHelper
 
         $response = [
             'success' => true,
-            'data' => $result
+            'data' => $result,
         ];
 
         if (!empty($message)) {
             $response['message'] = $message;
         }
+
+        return response()->json($response, $code);
+    }
+
+    public static function sendResponseWithToken($result, $message = '', $code = 200)
+    {
+        if ($code === 204) {
+            return response()->noContent();
+        }
+
+        $response = [
+            'success' => true,
+            'data' => $result,
+            'token' => $result->createToken('authToken')->plainTextToken
+        ];
+
+        if (!empty($message)) {
+            $response['message'] = $message;
+        }
+
 
         return response()->json($response, $code);
     }

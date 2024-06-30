@@ -5,14 +5,23 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 
-class StoreStudentRequest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
+        $data = [
+            'email' => $this->email,
+            'password' => $this->password
+        ];
+
+        if (!Auth::attempt($data)) {
+            return false;
+        }
         return true;
     }
 
@@ -24,8 +33,9 @@ class StoreStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100',
-            'age' => 'required|integer|min:3'
+            //
+            'email' => 'required|string|email|min:2|max:255',
+            'password' => 'required|string|min:6'
         ];
     }
 
@@ -36,6 +46,17 @@ class StoreStudentRequest extends FormRequest
                 'success' => false,
                 'message' => 'Validation errors',
                 'data' => $validator->errors()
+            ]
+        ));
+    }
+
+    public function failedAuthorization()
+    {
+        throw new HttpResponseException(response()->json(
+            [
+                'success' => false,
+                'message' => 'Authorization errors',
+                'data' => 'Unauthorized'
             ]
         ));
     }

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Intefaces\StudentRepositoryInterface;
+use App\Interfaces\StudentRepositoryInterface;
 use App\Models\Student;
 
 class StudentRepository implements StudentRepositoryInterface
