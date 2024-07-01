@@ -5,11 +5,14 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
-Route::apiResource('/students', StudentController::class);
+Route::middleware('ensuretokenisvalid', 'auth:sanctum')->group(
+    function () {
+        Route::apiResource('/students', StudentController::class);
+    }
+);
+
+
 // Route::post("/students", [
 //     StudentController::class, 'store'
 // ]);
@@ -24,5 +27,14 @@ Route::apiResource('/students', StudentController::class);
 // ]);
 
 
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(
+    function () {
+        Route::get('/profile', [AuthController::class, 'profile']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/logoutall', [AuthController::class, 'logoutall']);
+    }
+);

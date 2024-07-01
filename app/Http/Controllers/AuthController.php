@@ -119,4 +119,59 @@ class AuthController extends Controller
             return  ApiResponseHelper::rollback($ex);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/api/logout",
+     *      tags={"Auth"},
+     *      summary="Logout user",
+     *      description="Logout user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="User logged out successfully",
+     *      )
+     * ) 
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return ApiResponseHelper::sendResponse([], 'User logged out successfully', 200);
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/logoutall",
+     *      tags={"Auth"},
+     *      summary="Logout user from all devices",
+     *      description="Logout user from all devices",
+     *      @OA\Response(
+     *          response=200,
+     *          description="User logged out successfully",
+     *      )
+     * ) 
+     */
+    public function logoutall(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return ApiResponseHelper::sendResponse([], 'User logged out successfully', 200);
+    }
+
+
+    /**
+     * @OA\Get(
+     *      path="/api/profile",
+     *      tags={"Auth"},
+     *      summary="User profile",
+     *      description="User profile",
+     *      @OA\Response(
+     *          response=200,
+     *          description="User profile",
+     *          @OA\JsonContent( ref="#/components/schemas/UserResource")
+     *      )
+     * ) 
+     */
+    public function profile(Request $request)
+    {
+        return ApiResponseHelper::sendResponse($request->user(), 'User profile', 200);
+    }
 }
