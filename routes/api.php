@@ -9,27 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('ensuretokenisvalid', 'auth:sanctum')->group(
-    function () {
-        Route::apiResource('/students', StudentController::class);
-    }
-);
-
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::get('/profile', [AuthController::class, 'profile']);
-        Route::post('/logout', [AuthController::class, 'logout']);
-        Route::post('/logoutall', [AuthController::class, 'logoutall']);
+        Route::get('/logout', [AuthController::class, 'logout']);
+        Route::get('/logoutall', [AuthController::class, 'logoutall']);
     }
 );
 
 
 
-/***** NOTES *******/
+/***** TEST *******/
 
 // Route::post("/students", [
 //     StudentController::class, 'store'
@@ -95,3 +88,11 @@ Route::get("/prueba", function () {
     $tipotejido = Tipotejido::find(1);
     return $tipotejido->tejidos;
 });
+
+
+
+Route::middleware('ensuretokenisvalid', 'auth:sanctum')->group(
+    function () {
+        Route::apiResource('/students', StudentController::class);
+    }
+);
