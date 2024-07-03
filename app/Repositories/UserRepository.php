@@ -20,4 +20,10 @@ class UserRepository implements UserRepositoryInterface
         // Logic to register user
         return User::create($data);
     }
+
+    public function getAll()
+    {
+        // Logic to get all users
+        return User::all();
+    }
 }

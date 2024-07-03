@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\api\StudentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\api\UserController;
 use App\Models\Tejido;
 use App\Models\Tipoacabado;
 use App\Models\Tipotejido;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,17 +14,28 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(
+Route::middleware('auth:api')->group(
     function () {
         Route::get('/profile', [AuthController::class, 'profile']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::get('/logoutall', [AuthController::class, 'logoutall']);
+        Route::get('/users', [UserController::class, 'index']);
     }
 );
 
 
 
+
 /***** TEST *******/
+
+// Route::middleware('auth:sanctum')->group(
+//     function () {
+//         Route::get('/profile', [AuthController::class, 'profile']);
+//         Route::get('/logout', [AuthController::class, 'logout']);
+//         Route::get('/logoutall', [AuthController::class, 'logoutall']);
+//     }
+// );
+
 
 // Route::post("/students", [
 //     StudentController::class, 'store'
@@ -85,14 +98,20 @@ Route::get("/prueba", function () {
     // return $tejido;
 
     // Relación Inversa
-    $tipotejido = Tipotejido::find(1);
-    return $tipotejido->tejidos;
+    // $tipotejido = Tipotejido::find(1);
+    // return $tipotejido->tejidos;
+
+    // test user with passport auth
+    $user = User::find(1);
+    $token = $user->createToken('authtoken')->accessToken;
+
+    return $token;
 });
 
 
 
-Route::middleware('ensuretokenisvalid', 'auth:sanctum')->group(
-    function () {
-        Route::apiResource('/students', StudentController::class);
-    }
-);
+// Route::middleware('ensuretokenisvalid', 'auth:sanctum')->group(
+//     function () {
+//         Route::apiResource('/students', StudentController::class);
+//     }
+// );

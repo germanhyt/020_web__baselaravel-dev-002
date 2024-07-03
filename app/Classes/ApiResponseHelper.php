@@ -49,7 +49,7 @@ class ApiResponseHelper
         $response = [
             'success' => true,
             'data' => $result,
-            'token' => $result->createToken('authToken')->plainTextToken
+            'token' => $result->createToken('authtoken')->accessToken
         ];
 
         if (!empty($message)) {

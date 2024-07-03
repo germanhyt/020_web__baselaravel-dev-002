@@ -121,7 +121,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Get(
      *      path="/api/logout",
      *      tags={"Auth"},
      *      summary="Logout user",
@@ -130,30 +130,32 @@ class AuthController extends Controller
      *          response=200,
      *          description="User logged out successfully",
      *      )
-     * ) 
+     * )
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        // $request->user()->currentAccessToken()->delete();
+        $token = $request->user()->token();
+        $token->revoke();
         return ApiResponseHelper::sendResponse([], 'User logged out successfully', 200);
     }
 
     /**
-     * @OA\Post(
+     * @OA\Get(
      *      path="/api/logoutall",
      *      tags={"Auth"},
-     *      summary="Logout user from all devices",
-     *      description="Logout user from all devices",
+     *      summary="Logout all user",
+     *      description="Logout all user",
      *      @OA\Response(
      *          response=200,
      *          description="User logged out successfully",
-     *      )
-     * ) 
+     *     )
+     * )
      */
     public function logoutall(Request $request)
     {
         $request->user()->tokens()->delete();
-        return ApiResponseHelper::sendResponse([], 'User logged out successfully', 200);
+        return ApiResponseHelper::sendResponse([], 'User logged out successfully!', 200);
     }
 
 

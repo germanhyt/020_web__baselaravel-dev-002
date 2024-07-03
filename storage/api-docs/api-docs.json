@@ -117,13 +117,13 @@
             }
         },
         "/api/logout": {
-            "post": {
+            "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Logout user",
                 "description": "Logout user",
-                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "operationId": "3f19b742e4ead13f81ba0d6c0d46ac1b",
                 "responses": {
                     "200": {
                         "description": "User logged out successfully"
@@ -132,13 +132,13 @@
             }
         },
         "/api/logoutall": {
-            "post": {
+            "get": {
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Logout user from all devices",
-                "description": "Logout user from all devices",
-                "operationId": "8ed10c9f63a066a9b5350061728a06be",
+                "summary": "Logout all user",
+                "description": "Logout all user",
+                "operationId": "38a4de1d85172414cc26157c46fd3ba7",
                 "responses": {
                     "200": {
                         "description": "User logged out successfully"
@@ -168,180 +168,24 @@
                 }
             }
         },
-        "/api/students": {
+        "/api/users": {
             "get": {
                 "tags": [
-                    "Students"
+                    "User"
                 ],
-                "summary": "Get list of students",
-                "description": "Return list of students",
-                "operationId": "535d897b77e498b3fa28007dda371af6",
+                "summary": "Get all users",
+                "description": "Get all users",
+                "operationId": "d64c69c227bcaa94189f8552f9336c55",
                 "responses": {
                     "200": {
-                        "description": "Succesful operation",
+                        "description": "All users",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StudentResource"
-                                    }
+                                    "$ref": "#/components/schemas/UserResource"
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Students"
-                ],
-                "summary": "Create new student",
-                "description": "Create a new student record",
-                "operationId": "cdcd906c4c8e328905218eec3971e8c6",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "age"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "age": {
-                                        "type": "integer",
-                                        "example": 20
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Record created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StudentResource"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/students/{id}": {
-            "get": {
-                "tags": [
-                    "Students"
-                ],
-                "summary": "Get student information",
-                "description": "Get student details by ID",
-                "operationId": "8f894dbfa733dcdb710bf599d3b95c36",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StudentResource"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Students"
-                ],
-                "summary": "Update student information",
-                "description": "Update student record by ID",
-                "operationId": "d53e3ab7e094268789b668b20ee405a8",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "age"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "age": {
-                                        "type": "integer",
-                                        "example": 20
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Record updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StudentResource"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Students"
-                ],
-                "summary": "Delete student record",
-                "description": "Delete student by ID",
-                "operationId": "9a3955a0d2e5ea12d45787f6ad608708",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Record deleted successfully"
                     }
                 }
             }
@@ -384,5 +228,31 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
 }
