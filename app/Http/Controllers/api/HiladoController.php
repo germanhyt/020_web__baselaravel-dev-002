@@ -45,7 +45,19 @@ class HiladoController extends Controller
             $hilados = $this->hiladoRepositoryInterface->filter('costo_por_kg', $request->costo_por_kg, $request->perPage);
         }
 
-        return response()->json($hilados);
+
+        $hiladosResponse = [
+            'data' => $hilados->items(),
+            'from' => $hilados->firstItem(),
+            'to' => $hilados->lastItem(),
+            'perPage' => $hilados->perPage(),
+            'currentPage' => $hilados->currentPage(),
+            'lastPage' => $hilados->lastPage(),
+            'total' => $hilados->total()
+        ];
+
+
+        return ApiResponseHelper::sendResponse($hiladosResponse, '', 200);
     }
 
 
