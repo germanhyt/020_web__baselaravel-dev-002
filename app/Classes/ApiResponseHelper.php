@@ -46,10 +46,21 @@ class ApiResponseHelper
             return response()->noContent();
         }
 
+        $tokenResult = $result->createToken('authtoken');
+        $token = $tokenResult->token;
+        $token->expires_at = now()->addWeeks(1);
+        $token->save();
+
+        $result['security'] = [
+            'accesToken' => $tokenResult->accessToken,
+            'tokenType' => 'Bearer',
+            'createdAt' => $token->created_at,
+            'expiresAt' => $token->expires_at,
+        ];
+
         $response = [
             'success' => true,
-            'data' => $result,
-            'token' => $result->createToken('authtoken')->accessToken
+            'data' => $result
         ];
 
         if (!empty($message)) {

@@ -31,4 +31,9 @@ class StudentRepository implements StudentRepositoryInterface
     {
         return Student::destroy($id);
     }
+
+    public function updatePartial(array $data, $id)
+    {
+        return Student::whereId($id)->update($data);
+    }
 }

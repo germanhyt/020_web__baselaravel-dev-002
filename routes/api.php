@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\StudentController;
+use App\Http\Controllers\api\HiladoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\UserController;
 use App\Models\Tejido;
@@ -22,6 +22,18 @@ Route::middleware('auth:api')->group(
         Route::get('/users', [UserController::class, 'index']);
     }
 );
+
+// Route::get('/hilados',[HiladoController::class, 'index'] );
+// hilados with queryparams to page and perpage
+Route::get('/hilados', [HiladoController::class, 'index']);
+Route::get('/hilados/{id}', [HiladoController::class, 'show']);
+Route::post('/hilados', [HiladoController::class, 'store']);
+Route::put('/hilados/{id}', [HiladoController::class, 'update']);
+Route::patch('/hilados/{id}', [HiladoController::class, 'updatePartial']);
+Route::delete('/hilados/{id}', [HiladoController::class, 'destroy']);
+
+
+
 
 
 

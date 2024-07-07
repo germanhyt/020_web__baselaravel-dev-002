@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\HiladoRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,6 +15,14 @@ class AppServiceProvider extends ServiceProvider
     {
         // En caso de que no se usen recursos de la base de datos, se puede comentar la siguiente línea
         $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
+
+
+
+        // Para registrar el repositorio de hilado en el contenedor de servicios de Laravel
+        $this->app->bind(
+            HiladoRepositoryInterface::class,
+            \App\Repositories\HiladoRepository::class
+        );
     }
 
     /**
@@ -21,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }
