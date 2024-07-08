@@ -46,6 +46,22 @@ class HiladoRepository implements HiladoRepositoryInterface
     // filter
     public function filter($field, $query, $perPage)
     {
+
         return Hilado::where($field, 'like', '%' . $query . '%')->paginate($perPage);
+    }
+
+    public function filters(array $filters, $perPage)
+    {
+        $query = Hilado::query();
+
+        foreach ($filters as $key => $value) {
+            if ($key == 'costo_por_kg') {
+                $query->where($key, '<=', $value); // Filtro de rango
+            } else {
+                $query->where($key, 'LIKE', '%' . $value . '%');
+            }
+        }
+
+        return $query->paginate($perPage);
     }
 }

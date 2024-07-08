@@ -15,4 +15,5 @@ interface HiladoRepositoryInterface
 
     public function getPaginated($perPage);
     public function filter($field, $query, $perPage);
+    public function filters(array $filters, $perPage);
 }

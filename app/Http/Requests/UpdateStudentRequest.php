@@ -37,6 +37,6 @@ class UpdateStudentRequest extends FormRequest
                 'message' => 'Validation errors',
                 'data' => $validator->errors()
             ]
-            ));
+        ));
     }
 }

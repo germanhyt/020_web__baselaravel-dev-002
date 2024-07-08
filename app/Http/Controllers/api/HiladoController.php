@@ -26,25 +26,59 @@ class HiladoController extends Controller
     public function index(Request $request)
     {
 
+        // dd($request->all());
+
         //filters with queryparams
-        $hilados = $this->hiladoRepositoryInterface->getPaginated($request->perPage);
+        // $hilados = $this->hiladoRepositoryInterface->getPaginated($request->perPage);
 
-        if ($request->has('descripcion')) {
-            $hilados = $this->hiladoRepositoryInterface->filter('descripcion', $request->descripcion, $request->perPage);
+        // if ($request->has('filter_descripcion')) {
+
+        //     $hilados = $this->hiladoRepositoryInterface->filter('descripcion', $request->filter_descripcion, $request->perPage);
+        // }
+
+        // if ($request->has('filter_tipo_fibra')) {
+        //     $hilados = $this->hiladoRepositoryInterface->filter('tipo_fibra', $request->filter_tipo_fibra, $request->perPage);
+        // }
+
+        // if ($request->has('filter_titulo_hilado')) {
+        //     $hilados = $this->hiladoRepositoryInterface->filter('titulo_hilado', $request->filter_titulo_hilado, $request->perPage);
+        // }
+
+        // if ($request->has('filter_costo_por_kg')) {
+        //     $hilados = $this->hiladoRepositoryInterface->filter('costo_por_kg', $request->filter_costo_por_kg, $request->perPage);
+        // }
+
+        // // para todos filters anteriores
+        // if ($request->has('filter_descripcion') && $request->has('filter_tipo_fibra') && $request->has('filter_titulo_hilado') && $request->has('filter_costo_por_kg')){
+
+        // }
+
+
+        // Recolectar filtros del request
+        $filters = [];
+
+        if ($request->has('filter_descripcion')) {
+            $filters['descripcion'] = $request->input('filter_descripcion');
         }
 
-        if ($request->has('tipo_fibra')) {
-            $hilados = $this->hiladoRepositoryInterface->filter('tipo_fibra', $request->tipo_fibra, $request->perPage);
+        if ($request->has('filter_tipo_fibra')) {
+            $filters['tipo_fibra'] = $request->input('filter_tipo_fibra');
         }
 
-        if ($request->has('titulo_hilado')) {
-            $hilados = $this->hiladoRepositoryInterface->filter('titulo_hilado', $request->titulo_hilado, $request->perPage);
+        if ($request->has('filter_titulo_hilado')) {
+            $filters['titulo_hilado'] = $request->input('filter_titulo_hilado');
         }
 
-        if ($request->has('costo_por_kg')) {
-            $hilados = $this->hiladoRepositoryInterface->filter('costo_por_kg', $request->costo_por_kg, $request->perPage);
+        if ($request->has('filter_costo_por_kg')) {
+            $filters['costo_por_kg'] = $request->input('filter_costo_por_kg');
         }
 
+        // Aplicar filtros si hay, de lo contrario obtener paginación por defecto
+        if (!empty($filters)) {
+            $hilados = $this->hiladoRepositoryInterface->filters($filters, $request->input('perPage'));
+        } else {
+            $hilados = $this->hiladoRepositoryInterface->getPaginated($request->input('perPage'));
+        }
 
         $hiladosResponse = [
             'data' => $hilados->items(),
@@ -56,8 +90,8 @@ class HiladoController extends Controller
             'total' => $hilados->total()
         ];
 
-
-        return ApiResponseHelper::sendResponse($hiladosResponse, '', 200);
+        // return ApiResponseHelper::sendResponse($hiladosResponse, '', 200);
+        return response()->json($hiladosResponse);
     }
 
 
@@ -92,7 +126,9 @@ class HiladoController extends Controller
     {
         $hilado = $this->hiladoRepositoryInterface->getById($id);
 
-        return ApiResponseHelper::sendResponse($hilado, '', 200);
+        // return ApiResponseHelper::sendResponse($hilado, '', 200);
+
+        return response()->json($hilado);
     }
 
     /**
