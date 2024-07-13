@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->string('tipo_fibra');
             $table->string('titulo_hilado');
-            $table->decimal('costo_por_kg', 8, 4);
+            $table->decimal('costo_por_kg', 8, 2);
 
             $table->timestamps();
         });
