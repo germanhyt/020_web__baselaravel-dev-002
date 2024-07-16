@@ -11,25 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hilados', function (Blueprint $table) {
+        Schema::create('hiladosproveedors', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
-            $table->unsignedBigInteger('id_tipofibra')
+            $table->unsignedBigInteger('id_hilado')
                 ->nullable();
-            $table->foreign('id_tipofibra')
+            $table->foreign('id_hilado')
                 ->references('id')
-                ->on('tipofibras')
+                ->on('hilados')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->unsignedBigInteger('id_color')
+            $table->unsignedBigInteger('id_proveedor')
                 ->nullable();
-            $table->foreign('id_color')
+            $table->foreign('id_proveedor')
                 ->references('id')
-                ->on('colors')
+                ->on('proveedors')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->string('titulo_hilado');
-
+            $table->decimal('costo_por_kg', 8, 2);
+            $table->date('vigencia');
             $table->timestamps();
         });
     }
@@ -39,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hilados');
+        Schema::dropIfExists('hiladosproveedors');
     }
 };

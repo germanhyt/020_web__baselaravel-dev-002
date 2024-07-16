@@ -20,8 +20,33 @@ class Hilado extends Model
      */
     protected $fillable = [
         "descripcion",
-        "tipo_fibra",
+        "id_tipofibra",
         "titulo_hilado",
-        "costo_por_kg",
+        "id_color",
     ];
+
+
+    /**
+     * Relación Inversa con tabla TipoFibra
+     */
+    public function tipoFibra()
+    {
+        return $this->belongsTo(TipoFibra::class, 'id_tipofibra');
+    }
+
+    /**
+     * Relación Inversa con tabla Color
+     */
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'id_color');
+    }
+
+    /**
+     * Relación Uno a Muchos con tabla HiladosProveedor
+     */
+    public function hiladosProveedores()
+    {
+        return $this->hasMany(HiladosProveedor::class, 'id_hilado');
+    }
 }

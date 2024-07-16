@@ -19,11 +19,11 @@ Route::middleware('auth:api')->group(
         Route::get('/profile', [AuthController::class, 'profile']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::get('/logoutall', [AuthController::class, 'logoutall']);
-        Route::get('/users', [UserController::class, 'index']);
 
 
         // Route::get('/hilados',[HiladoController::class, 'index'] );
         // hilados with queryparams to page and perpage
+        Route::get('/users', [UserController::class, 'index']);
         Route::get('/hilados', [HiladoController::class, 'index']);
         Route::get('/hilados/{id}', [HiladoController::class, 'show']);
         Route::post('/hilados', [HiladoController::class, 'store']);

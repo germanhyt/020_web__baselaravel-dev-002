@@ -44,9 +44,13 @@ class HiladoResource extends JsonResource
         return [
             'id' => $this->id,
             'descripcion' => $this->descripcion,
-            'tipo_fibra' => $this->tipo_fibra,
             'titulo_hilado' => $this->titulo_hilado,
-            'costo_por_kg' => $this->costo_por_kg,
+            'id_tipofibra' => $this->id_tipofibra,
+            'id_color' => $this->id_color,
+
+
+            // 'tipo_fibra' => $this->tipo_fibra,
+            // 'costo_por_kg' => $this->costo_por_kg,
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Interfaces\StudentRepositoryInterface;
+use App\Interfaces\HiladoRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
-use App\Repositories\StudentRepository;
+use App\Repositories\HiladoRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +17,12 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 
-        $this->app->bind(StudentRepositoryInterface::class, StudentRepository::class);
+
+        // Para registrar el repositorio de hilado en el contenedor de servicios de Laravel
+        $this->app->bind(
+            HiladoRepositoryInterface::class,
+            HiladoRepository::class
+        );
     }
 
     /**

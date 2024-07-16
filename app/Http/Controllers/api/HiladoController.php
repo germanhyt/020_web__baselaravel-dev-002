@@ -6,7 +6,7 @@ use App\Classes\ApiResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\HiladoRepositoryInterface;
-use App\Models\Hilado;
+
 
 /**
  * @OA\Server(url="http://localhost:8000")
@@ -26,36 +26,9 @@ class HiladoController extends Controller
     public function index(Request $request)
     {
 
-        // dd($request->all());
-
-        //filters with queryparams
-        // $hilados = $this->hiladoRepositoryInterface->getPaginated($request->perPage);
-
-        // if ($request->has('filter_descripcion')) {
-
-        //     $hilados = $this->hiladoRepositoryInterface->filter('descripcion', $request->filter_descripcion, $request->perPage);
-        // }
-
-        // if ($request->has('filter_tipo_fibra')) {
-        //     $hilados = $this->hiladoRepositoryInterface->filter('tipo_fibra', $request->filter_tipo_fibra, $request->perPage);
-        // }
-
-        // if ($request->has('filter_titulo_hilado')) {
-        //     $hilados = $this->hiladoRepositoryInterface->filter('titulo_hilado', $request->filter_titulo_hilado, $request->perPage);
-        // }
-
-        // if ($request->has('filter_costo_por_kg')) {
-        //     $hilados = $this->hiladoRepositoryInterface->filter('costo_por_kg', $request->filter_costo_por_kg, $request->perPage);
-        // }
-
-        // // para todos filters anteriores
-        // if ($request->has('filter_descripcion') && $request->has('filter_tipo_fibra') && $request->has('filter_titulo_hilado') && $request->has('filter_costo_por_kg')){
-
-        // }
-
-
-        // Recolectar filtros del request
         $filters = [];
+        $hilados = null;
+
 
         if ($request->has('filter_descripcion')) {
             $filters['descripcion'] = $request->input('filter_descripcion');
@@ -73,6 +46,10 @@ class HiladoController extends Controller
             $filters['costo_por_kg'] = $request->input('filter_costo_por_kg');
         }
 
+        if ($request->has('filter_proveedor')) {
+            $filters['proveedor'] = $request->input('filter_proveedor');
+        }
+
         // Aplicar filtros si hay, de lo contrario obtener paginación por defecto
         if (!empty($filters)) {
             $hilados = $this->hiladoRepositoryInterface->filters($filters, $request->input('perPage'));
@@ -80,8 +57,71 @@ class HiladoController extends Controller
             $hilados = $this->hiladoRepositoryInterface->getPaginated($request->input('perPage'));
         }
 
+
+        // 1ra forma de manejar el array de hilados
+        // $hilados_array_dto = $hilados->items();
+        // $hilados_array_dto_aux = [];
+        // foreach ($hilados_array_dto as $hilado) {
+        //     $maxCostProvider = null;
+        //     $maxCost = 0;
+        //     foreach ($hilado->hiladosProveedores as $hiladoProveedor) {
+        //         if ($hiladoProveedor->costo_por_kg > $maxCost) {
+        //             $maxCost = $hiladoProveedor->costo_por_kg;
+        //             $maxCostProvider = [
+        //                 "id" => $hiladoProveedor->proveedor->id,
+        //                 "descripcion" => $hiladoProveedor->proveedor->descripcion
+        //             ];
+        //         }
+        //     }
+
+        //     $hilados_array_dto_aux[] = [
+        //         'id' => $hilado->id,
+        //         'descripcion' => $hilado->descripcion ?? null,
+        //         'titulo' => $hilado->titulo_hilado ?? null,
+        //         "tipofibra" => $hilado->tipoFibra->descripcion ?? null,
+        //         "color" => $hilado->color->descripcion ?? null,
+        //         "proveedor" => $maxCostProvider ?? null,
+        //         "costo_por_kg" => $maxCost ?? null
+        //     ];
+        // }
+        // $hilados_array_dto = $hilados_array_dto_aux;
+
+
+        // 2da forma de manejar el array de hilados
+        // Por concepto collect es un método de laravel que convierte una colección en un array
+        // el siguiente código es para obtener el proveedor con el costo por kg más alto
+        $hiladosItemsDto = collect($hilados->items());
+
+        $hiladosArrayDto = $hiladosItemsDto->map(function ($hilado) {
+            $maxCostProvider = collect($hilado->hiladosProveedores)->reduce(function ($carry, $item) {
+                if (!$carry || $item->costo_por_kg > $carry['costo_por_kg']) {
+                    return [
+                        'costo_por_kg' => $item->costo_por_kg,
+                        'proveedor' => [
+                            "id" => $item->proveedor->id,
+                            "descripcion" => $item->proveedor->descripcion
+                        ]
+                    ];
+                }
+                return $carry;
+            }, null);
+
+            return [
+                'id' => $hilado->id,
+                'descripcion' => $hilado->descripcion,
+                'titulo_hilado' => $hilado->titulo_hilado,
+                'tipo_fibra' => $hilado->tipoFibra->descripcion ?? null,
+                'color' => $hilado->color->descripcion ?? null,
+                'proveedor' => $maxCostProvider['proveedor'] ?? null,
+                'costo_por_kg' => $maxCostProvider['costo_por_kg'] ?? null,
+                "updated_at" => $hilado->updated_at,
+                "created_at" => $hilado->created_at
+            ];
+        });
+
+
         $hiladosResponse = [
-            'data' => $hilados->items(),
+            'data' => $hiladosArrayDto,
             'from' => $hilados->firstItem(),
             'to' => $hilados->lastItem(),
             'perPage' => $hilados->perPage(),
@@ -128,7 +168,16 @@ class HiladoController extends Controller
 
         // return ApiResponseHelper::sendResponse($hilado, '', 200);
 
-        return response()->json($hilado);
+        $response = [
+            'id' => $hilado->id,
+            'descripcion' => $hilado->descripcion,
+            'titulo_hilado' => $hilado->titulo_hilado,
+            "tipo_fibra" => $hilado->tipoFibra->descripcion,
+            "color" => $hilado->color->descripcion,
+        ];
+
+
+        return response()->json($response);
     }
 
     /**
