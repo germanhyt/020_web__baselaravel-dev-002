@@ -100,7 +100,8 @@ class HiladoController extends Controller
                         'proveedor' => [
                             "id" => $item->proveedor->id,
                             "descripcion" => $item->proveedor->descripcion
-                        ]
+                        ],
+                        'vigencia' => $item->vigencia,
                     ];
                 }
                 return $carry;
@@ -108,12 +109,16 @@ class HiladoController extends Controller
 
             return [
                 'id' => $hilado->id,
-                'descripcion' => $hilado->descripcion,
-                'titulo_hilado' => $hilado->titulo_hilado,
+                'descripcion' => $hilado->descripcion ?? null,
+                'titulo_hilado' => $hilado->titulo_hilado ?? null,
                 'tipo_fibra' => $hilado->tipoFibra->descripcion ?? null,
                 'color' => $hilado->color->descripcion ?? null,
-                'proveedor' => $maxCostProvider['proveedor'] ?? null,
-                'costo_por_kg' => $maxCostProvider['costo_por_kg'] ?? null,
+                'proveedor' => [
+                    "id" => $maxCostProvider['proveedor']['id'] ?? null,
+                    "descripcion" => $maxCostProvider['proveedor']['descripcion'] ?? null,
+                ],
+                "vigencia" => $maxCostProvider['vigencia'] ?? null,
+                'costo_por_kg' => $maxCostProvider['costo_por_kg'] ?? 0,
                 "updated_at" => $hilado->updated_at,
                 "created_at" => $hilado->created_at
             ];
@@ -166,18 +171,20 @@ class HiladoController extends Controller
     {
         $hilado = $this->hiladoRepositoryInterface->getById($id);
 
-        // return ApiResponseHelper::sendResponse($hilado, '', 200);
 
         $response = [
             'id' => $hilado->id,
             'descripcion' => $hilado->descripcion,
             'titulo_hilado' => $hilado->titulo_hilado,
-            "tipo_fibra" => $hilado->tipoFibra->descripcion,
-            "color" => $hilado->color->descripcion,
+            'id_tipofibra' => $hilado->id_tipofibra,
+            "tipo_fibra" => $hilado->tipoFibra ? $hilado->tipoFibra->descripcion : null,
+            'id_color' => $hilado->id_color ?? null,
+            "color" => $hilado->color ? $hilado->color->descripcion : null
         ];
 
 
-        return response()->json($response);
+        return response()->json($response, 200);
+        // return ApiResponseHelper::sendResponse($hilado, '', 200);
     }
 
     /**

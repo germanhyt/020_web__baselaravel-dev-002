@@ -32,11 +32,6 @@ class HiladoResource extends JsonResource
      *         type="string",
      *         description="Titulo del hilado"
      *     ),
-     * *   @OA\Property(
-     *         property="costo_por_kg",
-     *         type="decimal",
-     *         description="Costo por kilogramo del hilado"
-     *     )
      * )
      */
     public function toArray(Request $request): array
@@ -47,7 +42,6 @@ class HiladoResource extends JsonResource
             'titulo_hilado' => $this->titulo_hilado,
             'id_tipofibra' => $this->id_tipofibra,
             'id_color' => $this->id_color,
-
 
             // 'tipo_fibra' => $this->tipo_fibra,
             // 'costo_por_kg' => $this->costo_por_kg,

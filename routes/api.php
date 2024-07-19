@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\api\HiladoController;
+use App\Http\Controllers\Api\HiladosproveedorController;
+use App\Http\Controllers\Api\ProveedorController;
+use App\Http\Controllers\Api\TipofibraController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\UserController;
 use App\Models\Tejido;
@@ -21,8 +25,8 @@ Route::middleware('auth:api')->group(
         Route::get('/logoutall', [AuthController::class, 'logoutall']);
 
 
+        // HILADOS
         // Route::get('/hilados',[HiladoController::class, 'index'] );
-        // hilados with queryparams to page and perpage
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/hilados', [HiladoController::class, 'index']);
         Route::get('/hilados/{id}', [HiladoController::class, 'show']);
@@ -30,6 +34,27 @@ Route::middleware('auth:api')->group(
         Route::put('/hilados/{id}', [HiladoController::class, 'update']);
         Route::patch('/hilados/{id}', [HiladoController::class, 'updatePartial']);
         Route::delete('/hilados/{id}', [HiladoController::class, 'destroy']);
+
+        // HILADOSPROVEEDOR    
+        Route::get('/hiladosproveedor', [HiladosproveedorController::class, 'index']);
+        Route::get('/hiladosproveedor/{id}', [HiladosproveedorController::class, 'show']);
+        Route::get('/hiladosproveedor/hilado/{id}', [HiladosproveedorController::class, 'showByHilado']);
+        Route::post('/hiladosproveedor', [HiladosproveedorController::class, 'store']);
+        Route::put('/hiladosproveedor/{id}', [HiladosproveedorController::class, 'update']);
+        Route::patch('/hiladosproveedor/{id}', [HiladosproveedorController::class, 'updatePartial']);
+        Route::delete('/hiladosproveedor/{id}', [HiladosproveedorController::class, 'destroy']);
+        Route::post('/hiladosproveedor/array', [HiladosproveedorController::class, 'storeArray']);
+        Route::put('/hiladosproveedor/array/{id}', [HiladosproveedorController::class, 'updateByHilado']);
+
+        // TIPOFIBRA
+        Route::get('/tipofibras', [TipofibraController::class, 'index']);
+
+        // COLOR
+        Route::get('/colors', [ColorController::class, 'index']);
+
+
+        // PROVEEDOR
+        Route::get('/proveedores', [ProveedorController::class, 'index']);
     }
 );
 

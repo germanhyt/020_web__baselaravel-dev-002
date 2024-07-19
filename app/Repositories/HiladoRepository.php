@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\HiladoRepositoryInterface;
 use App\Models\Hilado;
-use App\Models\Hiladosproveedor;
 use Illuminate\Support\Facades\DB;
 
 class HiladoRepository implements HiladoRepositoryInterface
