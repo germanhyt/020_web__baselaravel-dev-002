@@ -49,4 +49,12 @@ class Hilado extends Model
     {
         return $this->hasMany(HiladosProveedor::class, 'id_hilado');
     }
+
+    /**
+     * Relación Uno a Muchos con tabla TejidosHilado
+     */
+    public function tejidosHilados()
+    {
+        return $this->hasMany(TejidosHilado::class, 'id_hilado');
+    }
 }

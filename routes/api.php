@@ -4,14 +4,14 @@ use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\api\HiladoController;
 use App\Http\Controllers\Api\HiladosproveedorController;
 use App\Http\Controllers\Api\ProveedorController;
+use App\Http\Controllers\Api\TejidoController;
+use App\Http\Controllers\Api\TejidosHiladoController;
+use App\Http\Controllers\Api\TipoacabadoController;
 use App\Http\Controllers\Api\TipofibraController;
+use App\Http\Controllers\Api\TipotejidoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\UserController;
-use App\Models\Tejido;
-use App\Models\Tipoacabado;
-use App\Models\Tipotejido;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +20,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(
     function () {
+        // AUTH
         Route::get('/profile', [AuthController::class, 'profile']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::get('/logoutall', [AuthController::class, 'logoutall']);
@@ -55,6 +56,30 @@ Route::middleware('auth:api')->group(
 
         // PROVEEDOR
         Route::get('/proveedores', [ProveedorController::class, 'index']);
+
+        // TEJIDOSHILADO
+        Route::get('/tejidoshilado', [TejidosHiladoController::class, 'index']);
+        Route::get('/tejidoshilado/{id}', [TejidosHiladoController::class, 'show']);
+        Route::post('/tejidoshilado', [TejidosHiladoController::class, 'store']);
+        Route::put('/tejidoshilado/{id}', [TejidosHiladoController::class, 'update']);
+        Route::patch('/tejidoshilado/{id}', [TejidosHiladoController::class, 'updatePartial']);
+        Route::delete('/tejidoshilado/{id}', [TejidosHiladoController::class, 'destroy']);
+
+
+        // TEJIDO
+        Route::get('/tejidos', [TejidoController::class, 'index']);
+        Route::get('/tejidos/{id}', [TejidoController::class, 'show']);
+        Route::post('/tejidos', [TejidoController::class, 'store']);
+        Route::put('/tejidos/{id}', [TejidoController::class, 'update']);
+        Route::patch('/tejidos/{id}', [TejidoController::class, 'updatePartial']);
+        Route::delete('/tejidos/{id}', [TejidoController::class, 'destroy']);
+
+
+        // TIPOACABADO
+        Route::get('/tipoacabados', [TipoacabadoController::class, 'index']);
+
+        // TIPOACABADO
+        Route::get('/tipotejidos', [TipotejidoController::class, 'index']);
     }
 );
 

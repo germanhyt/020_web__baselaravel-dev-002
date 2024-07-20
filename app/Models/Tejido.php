@@ -45,4 +45,12 @@ class Tejido extends Model
     {
         return $this->belongsTo(Tipoacabado::class, 'id_tipoacabado');
     }
+
+    /**
+     * Relación Uno a Muchos
+     */
+    public function tejidoshilados()
+    {
+        return $this->hasMany(Tejidoshilado::class, 'id_tejido');
+    }
 }
