@@ -27,13 +27,13 @@ class Tejidoshilado extends Model
     ];
 
 
-    public function tejido()
-    {
-        return $this->belongsTo(Tejido::class, 'id_tejido');
-    }
-
     public function hilado()
     {
         return $this->belongsTo(Hilado::class, 'id_hilado');
+    }
+
+    public function tejido()
+    {
+        return $this->belongsTo(Tejido::class, 'id_tejido');
     }
 }

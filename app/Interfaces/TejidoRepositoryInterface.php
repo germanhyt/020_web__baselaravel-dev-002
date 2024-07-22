@@ -11,4 +11,7 @@ interface TejidoRepositoryInterface
     public function update($id, array $data);
     public function destroy($id);
     public function updatePartial($id, array $data);
+
+    public function getPaginated($perPage);
+    public function filters(array $filters, $perPage);
 }

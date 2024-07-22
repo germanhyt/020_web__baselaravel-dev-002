@@ -97,11 +97,11 @@ class HiladoController extends Controller
                 if (!$carry || $item->costo_por_kg > $carry['costo_por_kg']) {
                     return [
                         'costo_por_kg' => $item->costo_por_kg,
+                        'vigencia' => $item->vigencia,
                         'proveedor' => [
                             "id" => $item->proveedor->id,
                             "descripcion" => $item->proveedor->descripcion
                         ],
-                        'vigencia' => $item->vigencia,
                     ];
                 }
                 return $carry;
