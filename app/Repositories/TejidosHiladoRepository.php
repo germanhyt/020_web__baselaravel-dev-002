@@ -25,6 +25,11 @@ class TejidosHiladoRepository implements TejidosHiladoRepositoryInterface
         return TejidosHilado::find($id);
     }
 
+    public function getByTejido($id)
+    {
+        return TejidosHilado::where('id_tejido', $id)->get();
+    }
+
     public function store($data)
     {
         return TejidosHilado::create($data);

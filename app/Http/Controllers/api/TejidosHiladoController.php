@@ -24,6 +24,57 @@ class TejidosHiladoController extends Controller
         return ApiResponseHelper::sendResponse($tejidosHilado, "Tejidos Hilado retrieved successfully", 200);
     }
 
+    public function showByTejido($id)
+    {
+        $tejidosHilado = $this->tejidosHiladoRepositoryI->getByTejido($id);
+        $response = [];
+
+
+        if (count($tejidosHilado) > 0) {
+            foreach ($tejidosHilado as $tejidoHilado) {
+
+                $maxVigencia = collect($tejidoHilado->hilado->hiladosProveedores)->reduce(function ($carry, $item) {
+                    if (!$carry || $item->vigencia > $carry['vigencia']) {
+                        return [
+                            'costo_por_kg' => $item->costo_por_kg,
+                            'vigencia' => $item->vigencia,
+                            'proveedor' => [
+                                "id" => $item->proveedor->id,
+                                "descripcion" => $item->proveedor->descripcion
+                            ],
+                        ];
+                    }
+                    return $carry;
+                }, null);
+
+
+                // respuesta de la tabla intermedia
+                $response[] = [
+                    'id' => $tejidoHilado->id,
+                    'id_tejido' => $tejidoHilado->id_tejido,
+                    'id_hilado' => $tejidoHilado->id_hilado,
+                    'hilado' => [
+                        'id' => $tejidoHilado->hilado->id,
+                        'descripcion' => $tejidoHilado->hilado->descripcion,
+                        'tipofibra' => $tejidoHilado->hilado->tipoFibra->descripcion,
+                        'titulo' => $tejidoHilado->hilado->titulo_hilado,
+                        'color' => $tejidoHilado->hilado->color ? $tejidoHilado->hilado->color->descripcion : null,
+                        'proveedor' => [
+                            "id" => $maxVigencia['proveedor']['id'] ?? null,
+                            "descripcion" => $maxVigencia['proveedor']['descripcion'] ?? null,
+                        ],
+                        'costo_por_kg' => $maxVigencia['costo_por_kg'] ?? null,
+                        'vigencia' => $maxVigencia['vigencia'] ?? null,
+                    ],
+                    'participacion' => $tejidoHilado->participacion,
+                    'lm' => $tejidoHilado->lm,
+                ];
+            }
+        }
+
+        return response()->json($response, 200);
+    }
+
     public function show($id)
     {
         $tejidosHilado = $this->tejidosHiladoRepositoryI->getById($id);

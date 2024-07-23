@@ -64,6 +64,7 @@ Route::middleware('auth:api')->group(
         Route::put('/tejidoshilado/{id}', [TejidosHiladoController::class, 'update']);
         Route::patch('/tejidoshilado/{id}', [TejidosHiladoController::class, 'updatePartial']);
         Route::delete('/tejidoshilado/{id}', [TejidosHiladoController::class, 'destroy']);
+        Route::get('/tejidoshilado/tejido/{id}', [TejidosHiladoController::class, 'showByTejido']);
 
 
         // TEJIDO

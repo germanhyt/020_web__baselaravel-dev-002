@@ -93,8 +93,24 @@ class HiladoController extends Controller
         $hiladosItemsDto = collect($hilados->items());
 
         $hiladosArrayDto = $hiladosItemsDto->map(function ($hilado) {
-            $maxCostProvider = collect($hilado->hiladosProveedores)->reduce(function ($carry, $item) {
-                if (!$carry || $item->costo_por_kg > $carry['costo_por_kg']) {
+
+            // para obtener el proveedor con el costo por kg más alto
+            // $maxCostProvider = collect($hilado->hiladosProveedores)->reduce(function ($carry, $item) {
+            //     if (!$carry || $item->costo_por_kg > $carry['costo_por_kg']) {
+            //         return [
+            //             'costo_por_kg' => $item->costo_por_kg,
+            //             'vigencia' => $item->vigencia,
+            //             'proveedor' => [
+            //                 "id" => $item->proveedor->id,
+            //                 "descripcion" => $item->proveedor->descripcion
+            //             ],
+            //         ];
+            //     }
+            //     return $carry;
+            // }, null);
+
+            $maxVigencia = collect($hilado->hiladosProveedores)->reduce(function ($carry, $item) {
+                if (!$carry || $item->vigencia > $carry['vigencia']) {
                     return [
                         'costo_por_kg' => $item->costo_por_kg,
                         'vigencia' => $item->vigencia,
@@ -107,6 +123,7 @@ class HiladoController extends Controller
                 return $carry;
             }, null);
 
+
             return [
                 'id' => $hilado->id,
                 'descripcion' => $hilado->descripcion ?? null,
@@ -114,11 +131,11 @@ class HiladoController extends Controller
                 'tipo_fibra' => $hilado->tipoFibra->descripcion ?? null,
                 'color' => $hilado->color->descripcion ?? null,
                 'proveedor' => [
-                    "id" => $maxCostProvider['proveedor']['id'] ?? null,
-                    "descripcion" => $maxCostProvider['proveedor']['descripcion'] ?? null,
+                    "id" => $maxVigencia['proveedor']['id'] ?? null,
+                    "descripcion" => $maxVigencia['proveedor']['descripcion'] ?? null,
                 ],
-                "vigencia" => $maxCostProvider['vigencia'] ?? null,
-                'costo_por_kg' => $maxCostProvider['costo_por_kg'] ?? 0,
+                "vigencia" => $maxVigencia['vigencia'] ?? null,
+                'costo_por_kg' => $maxVigencia['costo_por_kg'] ?? 0,
                 "updated_at" => $hilado->updated_at,
                 "created_at" => $hilado->created_at
             ];

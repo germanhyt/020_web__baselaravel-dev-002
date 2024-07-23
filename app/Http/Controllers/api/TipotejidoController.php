@@ -20,6 +20,17 @@ class TipotejidoController extends Controller
     {
         $tipotejidos = $this->tipotejidoRepositoryI->getAll();
 
-        return response()->json($tipotejidos, 200);
+        $response = [];
+
+        if (count($tipotejidos) > 0) {
+            foreach ($tipotejidos as $tipotejido) {
+                $response[] = [
+                    'id' => $tipotejido->id,
+                    'descripcion' => $tipotejido->descripcion,
+                ];
+            }
+        }
+
+        return response()->json($response, 200);
     }
 }

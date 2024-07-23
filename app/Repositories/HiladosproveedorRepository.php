@@ -15,7 +15,10 @@ class HiladosproveedorRepository implements HiladosproveedorRepositoryInterface
 
     public function getByHilado($id)
     {
-        return Hiladosproveedor::where('id_hilado', $id)->get();
+        // buscar y ordenar por periodo de vigencia
+        return Hiladosproveedor::where('id_hilado', $id)
+            ->orderBy('vigencia', 'desc')
+            ->get();
     }
 
     public function getById($id)
@@ -27,7 +30,7 @@ class HiladosproveedorRepository implements HiladosproveedorRepositoryInterface
     {
         return Hiladosproveedor::create($data);
     }
-
+    
     public function storeArray(array $data)
     {
         // return Hiladosproveedor::create($data);
