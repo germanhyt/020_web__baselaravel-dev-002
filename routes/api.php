@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\HiladosproveedorController;
 use App\Http\Controllers\Api\ProveedorController;
 use App\Http\Controllers\Api\TejidoController;
 use App\Http\Controllers\Api\TejidosHiladoController;
+use App\Http\Controllers\Api\TejidosproveedorController;
 use App\Http\Controllers\Api\TipoacabadoController;
 use App\Http\Controllers\Api\TipofibraController;
 use App\Http\Controllers\Api\TipotejidoController;
@@ -81,10 +82,20 @@ Route::middleware('auth:api')->group(
 
         // TIPOACABADO
         Route::get('/tipotejidos', [TipotejidoController::class, 'index']);
+
+
+        // TEJIDOSPROVEEDOR
+        Route::get('/tejidosproveedor', [TejidosproveedorController::class, 'index']);
+        Route::get('/tejidosproveedor/{id}', [TejidosproveedorController::class, 'show']);
+        Route::get('/tejidosproveedor/tejido/{id}', [TejidosproveedorController::class, 'showByTejido']);
+        Route::post('/tejidosproveedor', [TejidosproveedorController::class, 'store']);
+        Route::put('/tejidosproveedor/{id}', [TejidosproveedorController::class, 'update']);
+        Route::put('/tejidosproveedor/array/{id}', [TejidosproveedorController::class, 'updateArrayByTejido']);
+        Route::patch('/tejidosproveedor/{id}', [TejidosproveedorController::class, 'updatePartial']);
+        Route::post('/tejidosproveedor/array', [TejidosproveedorController::class, 'storeArray']);
+        Route::delete('/tejidosproveedor/{id}', [TejidosproveedorController::class, 'destroy']);
     }
 );
-
-
 
 
 

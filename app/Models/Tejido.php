@@ -53,4 +53,12 @@ class Tejido extends Model
     {
         return $this->hasMany(Tejidoshilado::class, 'id_tejido');
     }
+
+    /**
+     * Relación Uno a Muchos
+     */
+    public function tejidosproveedores()
+    {
+        return $this->hasMany(Tejidosproveedor::class, 'id_tejido');
+    }
 }

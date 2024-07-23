@@ -14,12 +14,19 @@ class Proveedor extends Model
     protected $fillable = ['descripcion'];
 
 
-
     /**
      * Relación con tabla Hiladosproveedor
      */
     public function hiladosproveedors()
     {
         return $this->hasMany(Hiladosproveedor::class, 'id_proveedor');
+    }
+
+    /**
+     * Relación con tabla Tejidosproveedor
+     */
+    public function tejidosproveedors()
+    {
+        return $this->hasMany(Tejidosproveedor::class, 'id_proveedor');
     }
 }

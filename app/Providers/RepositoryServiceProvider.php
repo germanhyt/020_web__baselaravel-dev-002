@@ -8,6 +8,7 @@ use App\Interfaces\HiladosproveedorRepositoryInterface;
 use App\Interfaces\ProveedorRepositoryInterface;
 use App\Interfaces\TejidoRepositoryInterface;
 use App\Interfaces\TejidosHiladoRepositoryInterface;
+use App\Interfaces\TejidosProveedorRepositoryInterface;
 use App\Interfaces\TipoacabadoRepositoryInterface;
 use App\Interfaces\TipofibraRepositoryInterface;
 use App\Interfaces\TipotejidoRepositoryInterface;
@@ -18,6 +19,7 @@ use App\Repositories\HiladosproveedorRepository;
 use App\Repositories\ProveedorRepository;
 use App\Repositories\TejidoRepository;
 use App\Repositories\TejidosHiladoRepository;
+use App\Repositories\TejidosProveedorRepository;
 use App\Repositories\TipoacabadoRepository;
 use App\Repositories\TipofibraRepository;
 use App\Repositories\TipotejidoRepository;
@@ -90,6 +92,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             TipoacabadoRepositoryInterface::class,
             TipoacabadoRepository::class
+        );
+
+        // Para registrar el repositorio de tejidos proveedor en el contenedor de servicios de Laravel
+        $this->app->bind(
+            TejidosProveedorRepositoryInterface::class,
+            TejidosProveedorRepository::class
         );
     }
 

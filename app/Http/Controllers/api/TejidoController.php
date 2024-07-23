@@ -76,6 +76,23 @@ class TejidoController extends Controller
                 },
             );
 
+            $maxVigencia = collect($tejido->tejidosproveedores)->reduce(
+                function ($carry, $item) {
+                    if (!$carry || $item->vigencia > $carry['vigencia']) {
+                        return [
+                            'costo_por_kg' => $item->costo_por_kg,
+                            'vigencia' => $item->vigencia,
+                            'proveedor' => [
+                                'id' => $item->proveedor->id,
+                                'descripcion' => $item->proveedor->descripcion,
+                            ]
+                        ];
+                    }
+                    return $carry;
+                },
+                null
+            );
+
             return [
                 'id' => $tejido->id,
                 'descripcion' => $tejido->descripcion,
@@ -103,7 +120,13 @@ class TejidoController extends Controller
                     'descripcion' => $tejido->tipoacabado->descripcion ?? null
                 ],
                 'antipilling' => $tejido->antipilling,
-                'costo_por_kg' => $tejido->costo_por_kg,
+                'proveedor' => [
+                    'id' => $maxVigencia['proveedor']['id'] ?? null,
+                    'descripcion' => $maxVigencia['proveedor']['descripcion'] ?? null,
+                ],
+                'costo_por_kg' => $maxVigencia['costo_por_kg'] ?? 0,
+                'vigencia' => $maxVigencia['vigencia'] ?? null,
+                // 'costo_por_kg' => $tejido->costo_por_kg,
                 'ficha' => $tejido->ficha,
             ];
         });
