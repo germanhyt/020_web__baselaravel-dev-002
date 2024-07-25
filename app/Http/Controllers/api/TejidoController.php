@@ -6,6 +6,7 @@ use App\Classes\ApiResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Interfaces\TejidoRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TejidoController extends Controller
 {
@@ -16,6 +17,64 @@ class TejidoController extends Controller
     public function __construct(TejidoRepositoryInterface $tejidoRepositoryI)
     {
         $this->tejidoRepositoryI = $tejidoRepositoryI;
+    }
+
+
+    // PARA OBTENER ARCHIVOS
+    public function downloadFile(Request $request)
+    {
+        $filename = $request->input('filename');
+        $path = storage_path('app/public/files/' . $filename);
+        // $path = storage_path('app/public/files/TEST_20240724235204.pdf');
+
+        if (!file_exists($path)) {
+            return ApiResponseHelper::sendResponse(null, "El archivo no existe", 404);
+        }
+
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    }
+
+    // PARA SUBIR ARCHIVOS
+    public function uploadFile(Request $request)
+    {
+        // $file = $request->file('file');
+        // $path = $file->store('public/files');
+        // return response()->json(['path' => $path], 200);
+
+        // Obtener el archivo del formulario
+        $file = $request->file('file');
+
+        // Obtener el nombre original del archivo sin la extensión
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+
+        // Obtener la fecha y hora actual en formato que incluya año, mes, día, hora, minutos y segundos
+        $timestamp = date('YmdHis');
+
+        // Extraer la extensión del archivo original
+        $extension = $file->getClientOriginalExtension();
+
+        // Concatenar el nombre original con la fecha y hora actual y la extensión para formar el nuevo nombre del archivo
+        $name = $originalName . '_' . $timestamp;
+        $filename = $name . '.' . $extension;
+
+        // Guardar el archivo en el disco con el nuevo nombre
+        $path = $file->storeAs('public/files', $filename);
+
+        return response()->json([
+            'path' => $path,
+            'name' => $name
+        ], 200);
+    }
+
+    public function uploadFileByName(Request $request)
+    {
+
+        // upload del file y su nombre
+        $file = $request->file('file');
+        $path = $file->storeAs('public/files', $request->input('filename'));
+        return response()->json(['path' => $path], 200);
     }
 
     public function index(Request $request)

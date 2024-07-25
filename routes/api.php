@@ -75,6 +75,9 @@ Route::middleware('auth:api')->group(
         Route::put('/tejidos/{id}', [TejidoController::class, 'update']);
         Route::patch('/tejidos/{id}', [TejidoController::class, 'updatePartial']);
         Route::delete('/tejidos/{id}', [TejidoController::class, 'destroy']);
+        Route::post('/tejidos/upload', [TejidoController::class, 'uploadFile']);
+        Route::post('/tejidos/download', [TejidoController::class, 'downloadFile']);
+        // Route::post('/tejidos/download', [TejidoController::class, 'downloadFile']);
 
 
         // TIPOACABADO

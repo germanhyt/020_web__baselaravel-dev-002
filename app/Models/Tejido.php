@@ -29,7 +29,6 @@ class Tejido extends Model
         "ficha"
     ];
 
-
     /**
      * Relación Inversa 
      */
