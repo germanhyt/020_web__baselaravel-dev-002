@@ -56,7 +56,7 @@ class TejidosHiladoController extends Controller
                     'hilado' => [
                         'id' => $tejidoHilado->hilado->id,
                         'descripcion' => $tejidoHilado->hilado->descripcion,
-                        'tipofibra' => $tejidoHilado->hilado->tipoFibra->descripcion,
+                        'tipofibra' => $tejidoHilado->hilado->tipoFibra ?  $tejidoHilado->hilado->tipoFibra->descripcion : null,
                         'titulo' => $tejidoHilado->hilado->titulo_hilado,
                         'color' => $tejidoHilado->hilado->color ? $tejidoHilado->hilado->color->descripcion : null,
                         'proveedor' => [

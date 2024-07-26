@@ -132,7 +132,9 @@ class TejidoController extends Controller
                             ]
                         ];
                     }
+                    return $carry;
                 },
+                null
             );
 
             $maxVigencia = collect($tejido->tejidosproveedores)->reduce(
