@@ -91,11 +91,30 @@ class TejidosHiladoController extends Controller
         return response()->json($tejidosHilado, 201);
     }
 
+
+    public function storeArray(Request $request)
+    {
+        $data = $request->all();
+
+        $tejidosproveedor = $this->tejidosHiladoRepositoryI->storeArray($data);
+
+        return response()->json($tejidosproveedor);
+    }
+
     public function update(Request $request, $id)
     {
         $data = $request->all();
 
         $tejidosHilado = $this->tejidosHiladoRepositoryI->update($id, $data);
+
+        return response()->json($tejidosHilado, 200);
+    }
+
+    public function updateByTejido(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $tejidosHilado = $this->tejidosHiladoRepositoryI->updateByTejido($data, $id);
 
         return response()->json($tejidosHilado, 200);
     }

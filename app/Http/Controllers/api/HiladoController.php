@@ -156,6 +156,24 @@ class HiladoController extends Controller
         return response()->json($hiladosResponse);
     }
 
+    public function showAll()
+    {
+        $hilados = $this->hiladoRepositoryInterface->getAll();
+
+        $response = [];
+
+        if (count($hilados) > 0) {
+            foreach ($hilados as $hilado) {
+                $response[] = [
+                    'id' => $hilado->id,
+                    'descripcion' => $hilado->descripcion
+                ];
+            }
+        }
+
+        return response()->json($response, 200);
+    }
+
 
     /**
      * @OA\Get(

@@ -64,7 +64,7 @@ class TejidoController extends Controller
 
         return response()->json([
             'path' => $path,
-            'name' => $name
+            'name' => $filename
         ], 200);
     }
 
@@ -213,6 +213,21 @@ class TejidoController extends Controller
 
     public function store(Request $request)
     {
+        // "descripcion",
+        // "galga",
+        // "diametro",
+        // "agujas",
+        // "ancho",
+        // "densidad",
+        // "densidadgw",
+        // "encogimientolargo",
+        // "encogimientoancho",
+        // "revirado",
+        // "id_tipoacabado",
+        // "id_tipotejido",
+        // "antipilling",
+        // "costo_por_kg",
+        // "ficha"
         $data = $request->all();
 
         $tejido = $this->tejidoRepositoryI->store($data);

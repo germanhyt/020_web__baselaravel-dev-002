@@ -12,4 +12,6 @@ interface TejidosHiladoRepositoryInterface
     public function update($id, array $data);
     public function destroy($id);
     public function updatePartial($id, array $data);
+    public function storeArray(array $data);
+    public function updateByTejido(array $data, $id);
 }

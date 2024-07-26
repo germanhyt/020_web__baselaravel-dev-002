@@ -31,6 +31,7 @@ Route::middleware('auth:api')->group(
         // Route::get('/hilados',[HiladoController::class, 'index'] );
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/hilados', [HiladoController::class, 'index']);
+        Route::get('/hilados/all', [HiladoController::class, 'showAll']);
         Route::get('/hilados/{id}', [HiladoController::class, 'show']);
         Route::post('/hilados', [HiladoController::class, 'store']);
         Route::put('/hilados/{id}', [HiladoController::class, 'update']);
@@ -66,6 +67,8 @@ Route::middleware('auth:api')->group(
         Route::patch('/tejidoshilado/{id}', [TejidosHiladoController::class, 'updatePartial']);
         Route::delete('/tejidoshilado/{id}', [TejidosHiladoController::class, 'destroy']);
         Route::get('/tejidoshilado/tejido/{id}', [TejidosHiladoController::class, 'showByTejido']);
+        Route::post('/tejidoshilado/array', [TejidosHiladoController::class, 'storeArray']);
+        Route::put('/tejidoshilado/array/{id}', [TejidosHiladoController::class, 'updateByTejido']);
 
 
         // TEJIDO

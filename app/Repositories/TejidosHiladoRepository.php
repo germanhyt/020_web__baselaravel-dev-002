@@ -49,4 +49,16 @@ class TejidosHiladoRepository implements TejidosHiladoRepositoryInterface
     {
         return TejidosHilado::where('id', $id)->update($data);
     }
+
+    public function storeArray($data)
+    {
+        return TejidosHilado::insert($data);
+    }
+
+    public function updateByTejido($data, $id)
+    {
+        TejidosHilado::where('id_tejido', $id)->delete();
+
+        return TejidosHilado::insert($data);
+    }
 }
