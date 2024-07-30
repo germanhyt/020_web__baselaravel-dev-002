@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Interfaces\TejidosProveedorRepositoryInterface;
-use App\Models\Tejidoshilado;
 use App\Models\Tejidosproveedor;
 
 class TejidosProveedorRepository implements TejidosProveedorRepositoryInterface
@@ -43,7 +42,7 @@ class TejidosProveedorRepository implements TejidosProveedorRepositoryInterface
 
     public function updateArrayByTejido(array $data, $id)
     {
-        Tejidoshilado::where('id_tejido', $id)->delete();
+        Tejidosproveedor::where('id_tejido', $id)->delete();
 
         return Tejidosproveedor::insert($data);
     }
