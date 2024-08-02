@@ -42,9 +42,16 @@ class HiladoController extends Controller
             $filters['titulo_hilado'] = $request->input('filter_titulo_hilado');
         }
 
-        if ($request->has('filter_costo_por_kg')) {
-            $filters['costo_por_kg'] = $request->input('filter_costo_por_kg');
+        // if ($request->has('filter_costo_por_kg')) {
+        //     $filters['costo_por_kg'] = $request->input('filter_costo_por_kg');
+        // }
+        if ($request->has('filter_costo_por_kg_min')) {
+            $filters['costo_por_kg_min'] = $request->input('filter_costo_por_kg_min');
         }
+        if ($request->has('filter_costo_por_kg_max')) {
+            $filters['costo_por_kg_max'] = $request->input('filter_costo_por_kg_max');
+        }
+
 
         if ($request->has('filter_proveedor')) {
             $filters['proveedor'] = $request->input('filter_proveedor');
@@ -128,22 +135,22 @@ class HiladoController extends Controller
                 'id' => $hilado->id,
                 'descripcion' => $hilado->descripcion ?? null,
                 'titulo_hilado' => $hilado->titulo_hilado ?? null,
-                'tipo_fibra' => $hilado->tipoFibra->descripcion ?? null,
-                'color' => $hilado->color->descripcion ?? null,
+                'tipo_fibra' => $hilado->tipoFibra ? $hilado->tipoFibra->descripcion : null,
+                'color' => $hilado->color ? $hilado->color->descripcion : null,
                 'proveedor' => [
                     "id" => $maxVigencia['proveedor']['id'] ?? null,
                     "descripcion" => $maxVigencia['proveedor']['descripcion'] ?? null,
                 ],
                 "vigencia" => $maxVigencia['vigencia'] ?? null,
                 'costo_por_kg' => $maxVigencia['costo_por_kg'] ?? 0,
-                "updated_at" => $hilado->updated_at,
-                "created_at" => $hilado->created_at
+                "updated_at" => $hilado->updated_at ?? null,
+                "created_at" => $hilado->created_at ?? null
             ];
         });
 
 
         $hiladosResponse = [
-            'data' => $hiladosArrayDto,
+            'data' => $hiladosArrayDto ?? [],
             'from' => $hilados->firstItem(),
             'to' => $hilados->lastItem(),
             'perPage' => $hilados->perPage(),
@@ -212,7 +219,7 @@ class HiladoController extends Controller
             'descripcion' => $hilado->descripcion,
             'titulo_hilado' => $hilado->titulo_hilado,
             'id_tipofibra' => $hilado->id_tipofibra,
-            "tipo_fibra" => $hilado->tipoFibra ? $hilado->tipoFibra->descripcion : null,
+            "tipo_fibra" => $hilado->tipofibra ? $hilado->tipofibra->descripcion : null,
             'id_color' => $hilado->id_color ?? null,
             "color" => $hilado->color ? $hilado->color->descripcion : null
         ];

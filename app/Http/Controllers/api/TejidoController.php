@@ -92,20 +92,44 @@ class TejidoController extends Controller
             $filters['tipotejido'] = $request->input('filter_tipotejido');
         }
 
-        if ($request->has('filter_densidad')) {
-            $filters['densidad'] = $request->input('filter_densidad');
+        // if ($request->has('filter_densidad')) {
+        //     $filters['densidad'] = $request->input('filter_densidad');
+        // }
+        if ($request->has('filter_densidad_min')) {
+            $filters['densidad_min'] = $request->input('filter_densidad_min');
+        }
+        if ($request->has('filter_densidad_max')) {
+            $filters['densidad_max'] = $request->input('filter_densidad_max');
         }
 
-        if ($request->has('filter_densidadgw')) {
-            $filters['densidadgw'] = $request->input('filter_densidadgw');
+        // if ($request->has('filter_densidadgw')) {
+        //     $filters['densidadgw'] = $request->input('filter_densidadgw');
+        // }
+        if ($request->has('filter_densidadgw_min')) {
+            $filters['densidadgw_min'] = $request->input('filter_densidadgw_min');
+        }
+        if ($request->has('filter_densidadgw_max')) {
+            $filters['densidadgw_max'] = $request->input('filter_densidadgw_max');
         }
 
-        if ($request->has('filter_galga')) {
-            $filters['galga'] = $request->input('filter_galga');
+        // if ($request->has('filter_galga')) {
+        //     $filters['galga'] = $request->input('filter_galga');
+        // }
+        if ($request->has('filter_galga_min')) {
+            $filters['galga_min'] = $request->input('filter_galga_min');
+        }
+        if ($request->has('filter_galga_max')) {
+            $filters['galga_max'] = $request->input('filter_galga_max');
         }
 
-        if ($request->has('filter_diametro')) {
-            $filters['diametro'] = $request->input('filter_diametro');
+        // if ($request->has('filter_diametro')) {
+        //     $filters['diametro'] = $request->input('filter_diametro');
+        // }
+        if ($request->has('filter_diametro_min')) {
+            $filters['diametro_min'] = $request->input('filter_diametro_min');
+        }
+        if ($request->has('filter_diametro_max')) {
+            $filters['diametro_max'] = $request->input('filter_diametro_max');
         }
 
         if (!empty($filters)) {

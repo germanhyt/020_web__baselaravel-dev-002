@@ -77,7 +77,20 @@ class HiladoRepository implements HiladoRepositoryInterface
         }
 
         # Filtro por costo
-        if (isset($filters['costo_por_kg'])) {
+        // if (isset($filters['costo_por_kg'])) {
+        //     $query->whereExists(function ($subQuery) use ($filters) {
+        //         $subQuery->select(DB::raw(1))
+        //             ->from('hiladosproveedors as hp')
+        //             ->whereRaw('hp.id_hilado = hilados.id')
+        //             ->whereRaw('hp.costo_por_kg = (
+        //                 SELECT MAX(hp2.costo_por_kg)
+        //                 FROM hiladosproveedors hp2
+        //                 WHERE hp2.id_hilado = hilados.id
+        //             )')
+        //             ->where('hp.costo_por_kg', '<=', $filters['costo_por_kg']);
+        //     });
+        // }
+        if (isset($filters['costo_por_kg_min']) || isset($filters['costo_por_kg_max'])) {
             $query->whereExists(function ($subQuery) use ($filters) {
                 $subQuery->select(DB::raw(1))
                     ->from('hiladosproveedors as hp')
@@ -86,10 +99,18 @@ class HiladoRepository implements HiladoRepositoryInterface
                         SELECT MAX(hp2.costo_por_kg)
                         FROM hiladosproveedors hp2
                         WHERE hp2.id_hilado = hilados.id
-                    )')
-                    ->where('hp.costo_por_kg', '<=', $filters['costo_por_kg']);
+                    )');
+
+                if (isset($filters['costo_por_kg_min'])) {
+                    $subQuery->where('hp.costo_por_kg', '>=', $filters['costo_por_kg_min']);
+                }
+
+                if (isset($filters['costo_por_kg_max'])) {
+                    $subQuery->where('hp.costo_por_kg', '<=', $filters['costo_por_kg_max']);
+                }
             });
         }
+
 
         # Filtro por nombre de proveedor
         if (isset($filters['proveedor'])) {
@@ -97,12 +118,7 @@ class HiladoRepository implements HiladoRepositoryInterface
                 $subQuery->select(DB::raw(1))
                     ->from('hiladosproveedors as hp')
                     ->join('proveedors as p', 'hp.id_proveedor', '=', 'p.id')
-                    ->whereRaw('hp.id_hilado = hilados.id')
-                    ->whereRaw('hp.costo_por_kg = (
-                             SELECT MAX(hp2.costo_por_kg)
-                             FROM hiladosproveedors hp2
-                             WHERE hp2.id_hilado = hilados.id
-                         )')
+                    ->whereColumn('hp.id_hilado', 'hilados.id')
                     ->where('p.descripcion', 'LIKE', '%' . $filters['proveedor'] . '%');
             });
         }

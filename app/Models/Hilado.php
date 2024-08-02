@@ -29,9 +29,9 @@ class Hilado extends Model
     /**
      * Relación Inversa con tabla TipoFibra
      */
-    public function tipoFibra()
+    public function tipofibra()
     {
-        return $this->belongsTo(TipoFibra::class, 'id_tipofibra');
+        return $this->belongsTo(Tipofibra::class, 'id_tipofibra', 'id');
     }
 
     /**
@@ -47,7 +47,7 @@ class Hilado extends Model
      */
     public function hiladosProveedores()
     {
-        return $this->hasMany(HiladosProveedor::class, 'id_hilado');
+        return $this->hasMany(Hiladosproveedor::class, 'id_hilado');
     }
 
     /**
@@ -55,6 +55,6 @@ class Hilado extends Model
      */
     public function tejidosHilados()
     {
-        return $this->hasMany(TejidosHilado::class, 'id_hilado');
+        return $this->hasMany(Tejidoshilado::class, 'id_hilado');
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Interfaces\ColorRepositoryInterface;
 
+/**
+ * @OA\Server(url="http://localhost:8000")
+ */
 class ColorController extends Controller
 {
     //

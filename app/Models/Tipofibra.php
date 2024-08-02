@@ -19,6 +19,6 @@ class Tipofibra extends Model
      */
     public function hilados()
     {
-        return $this->hasMany(Hilado::class, 'id_tipofibra', 'id');
+        return $this->hasMany(Hilado::class, 'id_tipofibra');
     }
 }

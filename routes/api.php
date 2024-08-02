@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\api\ColorController;
 use App\Http\Controllers\api\HiladoController;
-use App\Http\Controllers\Api\HiladosproveedorController;
-use App\Http\Controllers\Api\ProveedorController;
-use App\Http\Controllers\Api\TejidoController;
-use App\Http\Controllers\Api\TejidosHiladoController;
-use App\Http\Controllers\Api\TejidosproveedorController;
-use App\Http\Controllers\Api\TipoacabadoController;
-use App\Http\Controllers\Api\TipofibraController;
-use App\Http\Controllers\Api\TipotejidoController;
+use App\Http\Controllers\api\HiladosproveedorController;
+use App\Http\Controllers\api\ProveedorController;
+use App\Http\Controllers\api\TejidoController;
+use App\Http\Controllers\api\TejidosHiladoController;
+use App\Http\Controllers\api\TejidosproveedorController;
+use App\Http\Controllers\api\TipoacabadoController;
+use App\Http\Controllers\api\TipofibraController;
+use App\Http\Controllers\api\TipotejidoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\api\UserController;
 use App\Models\User;

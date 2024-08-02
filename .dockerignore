@@ -1,0 +1,2 @@
+# Ignorar node_modules y la carpeta de construcción
+node_modules
