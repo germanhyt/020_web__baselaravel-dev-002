@@ -46,14 +46,14 @@ class TejidosproveedorController extends Controller
             };
         }
 
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     public function show($id)
     {
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->getByTejido($id);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 200);
     }
 
     public function store(Request $request)
@@ -62,7 +62,7 @@ class TejidosproveedorController extends Controller
 
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->store($data);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 201);
     }
 
     public function update(Request $request, $id)
@@ -71,7 +71,7 @@ class TejidosproveedorController extends Controller
 
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->update($data, $id);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 200);
     }
 
     public function updateArrayByTejido(Request $request, $id)
@@ -80,7 +80,7 @@ class TejidosproveedorController extends Controller
 
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->updateArrayByTejido($data, $id);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 200);
     }
 
     public function updatePartial(Request $request, $id)
@@ -89,7 +89,7 @@ class TejidosproveedorController extends Controller
 
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->updatePartial($id, $data);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 200);
     }
 
     public function storeArray(Request $request)
@@ -98,13 +98,13 @@ class TejidosproveedorController extends Controller
 
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->storeArray($data);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 201);
     }
 
     public function destroy($id)
     {
         $tejidosproveedor = $this->tejidosProveedorRepositoryI->destroy($id);
 
-        return response()->json($tejidosproveedor);
+        return response()->json($tejidosproveedor, 200);
     }
 }
